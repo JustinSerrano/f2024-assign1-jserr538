@@ -1,8 +1,8 @@
 <?php
 
 // Required to connect to the f1 database
-include "f2024-assign1\config.inc.php";
-include "f2024-assign1\db-classes.inc.php";
+require_once "config.inc.php";
+require_once "db-classes.inc.php";
 
 try {
     $conn = DatabaseHelper::createConnection(array(
@@ -34,7 +34,7 @@ try {
     <main>
         <?php
         foreach ($drivers as $row) {
-            echo $row . ['driverRef'];
+            echo "<p>".$row['driverRef']."</p>";
         }
         ?>
 
