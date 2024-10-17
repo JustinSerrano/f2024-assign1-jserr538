@@ -11,9 +11,12 @@ try {
         DBPASS
     ));
 
+    // Retrieve all drivers
+    $driverGateway = new DriverDB($conn);
+    $allDrivers = $driverGateway->getAll();
+
     // Retrieve driver details
     if (isset($_GET['ref']) && !empty($_GET['ref'])) {
-        $driverGateway = new DriverDB($conn);
         $driver = $driverGateway->getDriverInfo($_GET['ref']);
         $raceResults = $driverGateway->getDriverRaceResults($_GET['ref']);
     } else {
@@ -43,46 +46,73 @@ try {
         </nav>
     </header>
     <main>
-        <section id="driver-details">
-            <?php
-            if ($driver) {
-                // Output the driver information
-                echo "<h2>Driver Information</h2>";
-                echo "<p><strong>Name: </strong>" . htmlspecialchars($driver['forename'] . " " . $driver['surname']) . "</p>";
-                echo "<p><strong>Date of Birth: </strong>" . htmlspecialchars($driver['dob']) . "</p>";
-                echo "<p><strong>Nationality: </strong>" . htmlspecialchars($driver['nationality']) . "</p>";
-                echo "<p><strong>Profile URL: </strong><a href='" . htmlspecialchars($driver['url']) . "'>" . htmlspecialchars($driver['url']) . "</a></p>";
-            } else {
-                echo "<p>No driver information available. Please search using the driver reference.</p>";
-            }
-            ?>
+        <!-- Search form compartment -->
+        <section class="search-container">
+            <form method="get" action="<?= $_SERVER['REQUEST_URI'] ?>">
+                <label for="ref">Select Driver: </label>
+                <select name="ref" id="ref" required>
+                    <option value="" disabled selected>-- Select a Driver --</option>
+                    <?php
+                    if ($allDrivers) {
+                        foreach ($allDrivers as $driverOption) {
+                            echo "<option value='" . htmlspecialchars($driverOption['driverRef']) . "'>" .
+                                htmlspecialchars($driverOption['forename'] . " " . $driverOption['surname']) .
+                                "</option>";
+                        }
+                    } else {
+                        echo "<option disabled>No drivers available</option>";
+                    }
+                    ?>
+                </select>
+                <button type="submit">Search</button>
+            </form>
         </section>
 
-        <section id="race-results">
-            <?php
-            if ($raceResults) {
-                echo "<h2>Race Results</h2>";
-                echo "<table border='1'>
+        <!-- Driver details and race results layout -->
+        <div class="content-container">
+            <!-- Driver details compartment -->
+            <section id="driver-details">
+                <?php
+                if ($driver) {
+                    // Output the driver information
+                    echo "<h2>Driver Information</h2>";
+                    echo "<p><strong>Name: </strong>" . htmlspecialchars($driver['forename'] . " " . $driver['surname']) . "</p>";
+                    echo "<p><strong>Date of Birth: </strong>" . htmlspecialchars($driver['dob']) . "</p>";
+                    echo "<p><strong>Nationality: </strong>" . htmlspecialchars($driver['nationality']) . "</p>";
+                    echo "<p><strong>Profile URL: </strong><a href='" . htmlspecialchars($driver['url']) . "'>" . htmlspecialchars($driver['url']) . "</a></p>";
+                } else {
+                    echo "<h3>No driver information available. Please search using the driver reference.</h3>";
+                }
+                ?>
+            </section>
+
+            <!-- Race results compartment -->
+            <section id="race-results">
+                <?php
+                if ($raceResults) {
+                    echo "<h2>Race Results</h2>";
+                    echo "<table border='1'>
                         <tr>
                             <th>Rnd</th>
                             <th>Circuit</th>
                             <th>Pos</th>
                             <th>Points</th>
                         </tr>";
-                foreach ($raceResults as $result) {
-                    echo "<tr>
+                    foreach ($raceResults as $result) {
+                        echo "<tr>
                             <td>" . htmlspecialchars($result['round']) . "</td>
                             <td>" . htmlspecialchars($result['name']) . "</td>
                             <td>" . htmlspecialchars($result['position']) . "</td>
                             <td>" . htmlspecialchars($result['points']) . "</td>
                         </tr>";
+                    }
+                    echo "</table>";
+                } else {
+                    echo "<h3>No race results found for the driver.</h3>";
                 }
-                echo "</table>";
-            } else {
-                echo "<p>No race results found for the driver.</p>";
-            }
-            ?>
-        </section>
+                ?>
+            </section>
+        </div>
     </main>
 
 </body>

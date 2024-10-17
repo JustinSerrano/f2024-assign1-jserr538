@@ -32,11 +32,29 @@ nav a:hover {
 /* Layout for main content */
 main {
     display: flex;
+    flex-direction: column;
     padding: 20px;
 }
 
+/* Search form section */
+.search-container {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+/* Driver details and race results container */
+.content-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
 /* Driver details section */
-#driver-details {
+.driver-details {
     width: 25%;
     padding: 15px;
     background-color: #f4f4f4;
@@ -45,8 +63,9 @@ main {
 }
 
 /* Race results section */
-#race-results {
-    flex-grow: 1; /* Allows this container to take the remaining space */
+.race-results {
+    flex-grow: 1;
+    /* Allows this container to take the remaining space */
     padding: 15px;
     background-color: #fff;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
@@ -58,7 +77,8 @@ table {
     border-collapse: collapse;
 }
 
-table th, table td {
+table th,
+table td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: center;
