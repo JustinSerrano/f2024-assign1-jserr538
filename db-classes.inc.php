@@ -68,6 +68,23 @@ class DriverDB
                     );
         return $statement->fetch();
     }
+    public function getDriverRaceResults($driverRef)
+    {
+        $sql=  "SELECT d.forename, d.surname, d.dob, d.nationality, d.url,
+                    ra.round, ra.name, res.position, res.points
+                FROM drivers d
+                JOIN results res ON d.driverId = res.driverId
+                JOIN races ra ON ra.raceId = res.raceId
+                WHERE d.driverRef = ?
+                    AND ra.year = 2023
+                ORDER BY ra.round";
+        $statement = DatabaseHelper::runQuery(
+                        $this->pdo,
+                        $sql,
+                        array($driverRef)
+                    );
+        return $statement->fetchAll();
+    }
 }
 // class PaintingDB
 // {
