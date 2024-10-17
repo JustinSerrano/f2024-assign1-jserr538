@@ -14,6 +14,14 @@ try {
     // Retrieve drivers
     $driverGateway = new DriverDB($conn);
     $drivers = $driverGateway->getAll();
+
+    // now retrieve  paintings ... either all or a subset based on querystring
+    if (isset($_GET['ref']) && !empty($_GET['ref'])) {
+        $driverGateway = new DriverDB($conn);
+        $driver = $driverGateway->getDriverInfo($_GET['ref']);
+    } else {
+        $driver = null;
+    }
 } catch (Exception $e) {
     die($e->getMessage());
 }
@@ -32,12 +40,26 @@ try {
 
     </header>
     <main>
+        <form method="get" action="<?= $_SERVER['REQUEST_URI'] ?>">
+            <label for="ref">Driver Reference: </label>
+            <input type="text" name="ref" id="ref">
+            <button type="submit">Search</button>
+        </form>
         <?php
-        foreach ($drivers as $row) {
-            echo "<p>".$row['driverRef']."</p>";
+        if ($driver) {
+            // Output the driver information
+            echo "<h2>Driver Information</h2>";
+            echo "<p><strong>Driver Ref: </strong>" . htmlspecialchars($driver['driverRef']) . "</p>";
+            echo "<p><strong>Name: </strong>" . htmlspecialchars($driver['forename'] . " " . $driver['surname']) . "</p>";
+            echo "<p><strong>Number: </strong>" . htmlspecialchars($driver['number']) . "</p>";
+            echo "<p><strong>Code: </strong>" . htmlspecialchars($driver['code']) . "</p>";
+            echo "<p><strong>Date of Birth: </strong>" . htmlspecialchars($driver['dob']) . "</p>";
+            echo "<p><strong>Nationality: </strong>" . htmlspecialchars($driver['nationality']) . "</p>";
+            echo "<p><strong>Profile URL: </strong><a href='" . htmlspecialchars($driver['url']) . "'>" . htmlspecialchars($driver['url']) . "</a></p>";
+        } else {
+            echo "<p>No driver information available. Please search using the driver reference.</p>";
         }
         ?>
-
     </main>
 
 </body>

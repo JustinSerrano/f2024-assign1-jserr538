@@ -58,6 +58,16 @@ class DriverDB
             DatabaseHelper::runQuery($this->pdo, $sql, null);
         return $statement->fetchAll();
     }
+    public function getDriverInfo($driverRef)
+    {
+        $sql = self::$baseSQL. " WHERE driverRef =?";
+        $statement = DatabaseHelper::runQuery(
+                        $this->pdo,
+                        $sql,
+                        array($driverRef)
+                    );
+        return $statement->fetch();
+    }
 }
 // class PaintingDB
 // {
