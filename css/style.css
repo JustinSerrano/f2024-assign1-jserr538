@@ -46,15 +46,15 @@ main {
     text-align: center;
 }
 
-/* Driver details and race results container */
+/* Sidebar details and race results container */
 .content-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     padding: 15px;
 }
 
-/* Driver details section */
-.driver-details {
+/* Sidebar details section */
+.sidebar-details {
     width: 25%;
     padding: 15px;
     background-color: #f4f4f4;

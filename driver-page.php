@@ -56,8 +56,7 @@ try {
                     if ($allDrivers) {
                         foreach ($allDrivers as $driverOption) {
                             echo "<option value='" . htmlspecialchars($driverOption['driverRef']) . "'>" .
-                                htmlspecialchars($driverOption['forename'] . " " . $driverOption['surname']) .
-                                "</option>";
+                                htmlspecialchars($driverOption['forename'] . " " . $driverOption['surname']) . "</option>";
                         }
                     } else {
                         echo "<option disabled>No drivers available</option>";
@@ -71,7 +70,7 @@ try {
         <!-- Driver details and race results layout -->
         <div class="content-container">
             <!-- Driver details compartment -->
-            <section id="driver-details">
+            <section id="sidebar-details">
                 <?php
                 if ($driver) {
                     // Output the driver information
@@ -79,7 +78,7 @@ try {
                     echo "<p><strong>Name: </strong>" . htmlspecialchars($driver['forename'] . " " . $driver['surname']) . "</p>";
                     echo "<p><strong>Date of Birth: </strong>" . htmlspecialchars($driver['dob']) . "</p>";
                     echo "<p><strong>Nationality: </strong>" . htmlspecialchars($driver['nationality']) . "</p>";
-                    echo "<p><strong>Profile URL: </strong><a href='" . htmlspecialchars($driver['url']) . "'>" . htmlspecialchars($driver['url']) . "</a></p>";
+                    echo "<p><strong>URL: </strong><a href='" . htmlspecialchars($driver['url']) . "'>" . htmlspecialchars($driver['url']) . "</a></p>";
                 } else {
                     echo "<h3>No driver information available. Please search using the driver reference.</h3>";
                 }

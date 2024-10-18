@@ -70,7 +70,7 @@ class DriverDB
     }
     public function getDriverRaceResults($driverRef)
     {
-        $sql=  "SELECT d.forename, d.surname, d.dob, d.nationality, d.url,
+        $sql=  "SELECT (d.forename || ' '|| d.surname) AS fullname, d.dob, d.nationality, d.url,
                     ra.round, ra.name, res.position, res.points
                 FROM drivers d
                 JOIN results res ON d.driverId = res.driverId
@@ -86,37 +86,49 @@ class DriverDB
         return $statement->fetchAll();
     }
 }
-// class PaintingDB
-// {
-//     private $pdo;
-//     private static $baseSQL = "SELECT PaintingID, Paintings.ArtistID,
-//         FirstName, LastName, Paintings.GalleryID, GalleryName,
-//         ImageFileName, Title, Excerpt, YearOfWork 
-//     FROM Galleries INNER JOIN (Artists INNER JOIN Paintings 
-//     ON Artists.ArtistID = Paintings.ArtistID) 
-//     ON Galleries.GalleryID = Paintings.GalleryID ";
-
-//     public function __construct($connection)
-//     {
-//         $this->pdo = $connection;
-//     }
-
-//     public function getAll()
-//     {
-//         $sql = self::$baseSQL;
-//         $statement =
-//             DatabaseHelper::runQuery($this->pdo, $sql, null);
-//         return $statement->fetchAll();
-//     }
-
-//     public function getAllForArtist($artistID)
-//     {
-//         $sql = self::$baseSQL . " WHERE Paintings.ArtistID=?";
-//         $statement = DatabaseHelper::runQuery(
-//             $this->pdo,
-//             $sql,
-//             array($artistID)
-//         );
-//         return $statement->fetchAll();
-//     }
-// }
+class ConstructorDB
+{
+    private $pdo;
+    private static $baseSQL =  "SELECT * FROM constructors";
+    public function __construct($connection)
+    {
+        $this->pdo = $connection;
+    }
+    public function getAll()
+    {
+        $sql = self::$baseSQL;
+        $statement =
+            DatabaseHelper::runQuery($this->pdo, $sql, null);
+        return $statement->fetchAll();
+    }
+    public function getConstructorInfo($constructorRef)
+    {
+        $sql = self::$baseSQL. " WHERE constructorRef =?";
+        $statement = DatabaseHelper::runQuery(
+                        $this->pdo,
+                        $sql,
+                        array($constructorRef)
+                    );
+        return $statement->fetch();
+    }
+    public function getConstructorRaceResults($constructorRef)
+    {
+        $sql=  "SELECT c.name AS constructorName, c.nationality, c.url,
+                    (d.forename || ' ' || d.surname) AS fullname,
+                    ra.round, ra.name AS raceName, res.position, res.points
+                FROM constructors c
+                JOIN constructorResults cr ON c.constructorId = cr.constructorId
+                JOIN results res ON cr.raceId = res.raceId AND cr.constructorId = res.constructorId
+                JOIN drivers d ON res.driverId = d.driverId
+                JOIN races ra ON ra.raceId = cr.raceId
+                WHERE c.constructorRef = ?
+                    AND ra.year = 2023
+                ORDER BY ra.round";
+        $statement = DatabaseHelper::runQuery(
+                        $this->pdo,
+                        $sql,
+                        array($constructorRef)
+                    );
+        return $statement->fetchAll();
+    }
+}
