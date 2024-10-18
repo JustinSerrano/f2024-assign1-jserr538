@@ -75,15 +75,14 @@ try {
                 if ($driver) {
                     // Grab element values and set them in variables
                     $fullname = htmlspecialchars($driver['fullname']);
-                    $dob = new DateTime($driver['dob']);
-                    $formattedDob = htmlspecialchars(date_format($dob, "F j, Y"));
+                    $dob = htmlspecialchars(date_format(new DateTime($driver['dob']), "F j, Y"));
                     $nationality = htmlspecialchars($driver['nationality']);
                     $url = htmlspecialchars($driver['url']);
 
                     // Output the driver information
                     echo "<h2>Driver Information</h2>
                             <p><strong>Name: </strong>$fullname</p>
-                            <p><strong>Date of Birth: </strong>$formattedDob</p>
+                            <p><strong>Date of Birth: </strong>$dob</p>
                             <p><strong>Nationality: </strong>$nationality</p>
                             <p><strong>URL: </strong><a href='$url'>Wikipedia</a></p>";
                 } else {
