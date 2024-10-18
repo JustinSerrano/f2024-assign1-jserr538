@@ -46,7 +46,8 @@ the passed array of parameters (null if none)
 class DriverDB
 {
     private $pdo;
-    private static $baseSQL =  "SELECT * FROM drivers";
+    private static $baseSQL =  "SELECT (forename || ' '|| surname) AS fullname, 
+                                driverRef, dob, nationality, url FROM drivers";
     public function __construct($connection)
     {
         $this->pdo = $connection;

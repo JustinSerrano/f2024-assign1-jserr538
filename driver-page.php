@@ -46,7 +46,7 @@ try {
         </nav>
     </header>
     <main>
-        <!-- Search form compartment -->
+        <!-- Search form container -->
         <section class="search-container">
             <form method="get" action="<?= $_SERVER['REQUEST_URI'] ?>">
                 <label for="ref">Select Driver: </label>
@@ -56,7 +56,7 @@ try {
                     if ($allDrivers) {
                         foreach ($allDrivers as $driverOption) {
                             echo "<option value='" . htmlspecialchars($driverOption['driverRef']) . "'>" .
-                                htmlspecialchars($driverOption['forename'] . " " . $driverOption['surname']) . "</option>";
+                                htmlspecialchars($driverOption['fullname']) . "</option>";
                         }
                     } else {
                         echo "<option disabled>No drivers available</option>";
@@ -69,23 +69,30 @@ try {
 
         <!-- Driver details and race results layout -->
         <div class="content-container">
-            <!-- Driver details compartment -->
+            <!-- Driver details container -->
             <section class="sidebar-details">
                 <?php
                 if ($driver) {
+                    // Grab element values and set them in variables
+                    $fullname = htmlspecialchars($driver['fullname']);
+                    $dob = new DateTime($driver['dob']);
+                    $formattedDob = htmlspecialchars(date_format($dob, "F j, Y"));
+                    $nationality = htmlspecialchars($driver['nationality']);
+                    $url = htmlspecialchars($driver['url']);
+
                     // Output the driver information
-                    echo "<h2>Driver Information</h2>";
-                    echo "<p><strong>Name: </strong>" . htmlspecialchars($driver['forename'] . " " . $driver['surname']) . "</p>";
-                    echo "<p><strong>Date of Birth: </strong>" . htmlspecialchars($driver['dob']) . "</p>";
-                    echo "<p><strong>Nationality: </strong>" . htmlspecialchars($driver['nationality']) . "</p>";
-                    echo "<p><strong>URL: </strong><a href='" . htmlspecialchars($driver['url']) . "'>" . htmlspecialchars($driver['url']) . "</a></p>";
+                    echo "<h2>Driver Information</h2>
+                            <p><strong>Name: </strong>$fullname</p>
+                            <p><strong>Date of Birth: </strong>$formattedDob</p>
+                            <p><strong>Nationality: </strong>$nationality</p>
+                            <p><strong>URL: </strong><a href='$url'>Wikipedia</a></p>";
                 } else {
                     echo "<h3>No driver information available. Please search using the driver reference.</h3>";
                 }
                 ?>
             </section>
 
-            <!-- Race results compartment -->
+            <!-- Race results container -->
             <section class="race-results">
                 <?php
                 if ($raceResults) {
@@ -113,5 +120,6 @@ try {
             </section>
         </div>
     </main>
-
 </body>
+
+</html>

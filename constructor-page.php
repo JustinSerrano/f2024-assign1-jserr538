@@ -46,7 +46,7 @@ try {
         </nav>
     </header>
     <main>
-        <!-- Search form compartment -->
+        <!-- Search form container -->
         <section class="search-container">
             <form method="get" action="<?= $_SERVER['REQUEST_URI'] ?>">
                 <label for="ref">Select Constructor: </label>
@@ -69,22 +69,27 @@ try {
 
         <!-- Constructor details and race results layout -->
         <div class="content-container">
-            <!-- Constructor details compartment -->
+            <!-- Constructor details container -->
             <section class="sidebar-details">
                 <?php
                 if ($constructor) {
-                    // Output the driver information
-                    echo "<h2>Constructor Information</h2>";
-                    echo "<p><strong>Name: </strong>" . htmlspecialchars($constructor['name']) . "</p>";
-                    echo "<p><strong>Nationality: </strong>" . htmlspecialchars($constructor['nationality']) . "</p>";
-                    echo "<p><strong>URL: </strong><a href='" . htmlspecialchars($constructor['url']) . "'>" . htmlspecialchars($constructor['url']) . "</a></p>";
+                    // Grab element values and set them in variables
+                    $name = htmlspecialchars($constructor['name']);
+                    $nationality = htmlspecialchars($constructor['nationality']);
+                    $url = htmlspecialchars($constructor['url']);
+
+                    // Output the constructor information
+                    echo "<h2>Constructor Information</h2>
+                            <p><strong>Name: </strong>$name</p>
+                            <p><strong>Nationality: </strong>$nationality</p>
+                            <p><strong>URL: </strong><a href='$url'>Wikipedia</a></p>";
                 } else {
                     echo "<h3>No constructor information available. Please search using the constructor reference.</h3>";
                 }
                 ?>
             </section>
 
-            <!-- Race results compartment -->
+            <!-- Race results container -->
             <section class="race-results">
                 <?php
                 if ($raceResults) {
@@ -114,5 +119,6 @@ try {
             </section>
         </div>
     </main>
-
 </body>
+
+</html>

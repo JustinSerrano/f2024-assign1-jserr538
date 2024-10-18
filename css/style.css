@@ -56,10 +56,12 @@ main {
 /* Sidebar details section */
 .sidebar-details {
     width: 25%;
-    padding: 15px;
+    margin: 0 auto;
+    padding: 15px 50px 15px 50px;
     background-color: #f4f4f4;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
     margin-right: 20px;
+    text-align: left;
 }
 
 /* Race results section */
