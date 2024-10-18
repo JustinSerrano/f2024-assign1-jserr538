@@ -49,7 +49,7 @@ main {
 /* Sidebar details and race results container */
 .content-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     padding: 15px;
 }
 
@@ -57,9 +57,9 @@ main {
 .sidebar-details {
     width: 25%;
     padding: 15px;
-    margin-right: 5%;
     background-color: #f4f4f4;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
 }
 
 /* Race results section */
@@ -67,7 +67,6 @@ main {
     flex-grow: 1;
     /* Allows this container to take the remaining space */
     padding: 15px;
-    margin-left: 5%;
     background-color: #fff;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }

@@ -70,7 +70,7 @@ try {
         <!-- Driver details and race results layout -->
         <div class="content-container">
             <!-- Driver details compartment -->
-            <section id="sidebar-details">
+            <section class="sidebar-details">
                 <?php
                 if ($driver) {
                     // Output the driver information
@@ -86,7 +86,7 @@ try {
             </section>
 
             <!-- Race results compartment -->
-            <section id="race-results">
+            <section class="race-results">
                 <?php
                 if ($raceResults) {
                     echo "<h2>Race Results</h2>";
