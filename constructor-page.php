@@ -46,27 +46,6 @@ try {
         </nav>
     </header>
     <main>
-        <!-- Search form container -->
-        <section class="search-container">
-            <form method="get" action="<?= $_SERVER['REQUEST_URI'] ?>">
-                <label for="ref">Select Constructor: </label>
-                <select name="ref" id="ref" required>
-                    <option value="" disabled selected>-- Select a Constructor --</option>
-                    <?php
-                    if ($allConstructors) {
-                        foreach ($allConstructors as $constructorOption) {
-                            echo "<option value='" . htmlspecialchars($constructorOption['constructorRef']) . "'>" .
-                                htmlspecialchars($constructorOption['name']) . "</option>";
-                        }
-                    } else {
-                        echo "<option disabled>No constructors available</option>";
-                    }
-                    ?>
-                </select>
-                <button type="submit">Search</button>
-            </form>
-        </section>
-
         <!-- Constructor details and race results layout -->
         <div class="content-container">
             <!-- Constructor details container -->
@@ -103,12 +82,20 @@ try {
                             <th>Points</th>
                         </tr>";
                     foreach ($raceResults as $result) {
+                        // Grab element values and set them in variables
+                        $round = htmlspecialchars($result['round']);
+                        $raceName = htmlspecialchars($result['raceName']);
+                        $fullname = htmlspecialchars($result['fullname']);
+                        $position = htmlspecialchars($result['position']);
+                        $points = htmlspecialchars($result['points']);
+
+                        // Output race results
                         echo "<tr>
-                            <td>" . htmlspecialchars($result['round']) . "</td>
-                            <td>" . htmlspecialchars($result['raceName']) . "</td>
-                            <td>" . htmlspecialchars($result['fullname']) . "</td>
-                            <td>" . htmlspecialchars($result['position']) . "</td>
-                            <td>" . htmlspecialchars($result['points']) . "</td>
+                            <td>$round</td>
+                            <td>$raceName</td>
+                            <td>$fullname</td>
+                            <td>$position</td>
+                            <td>$points</td>
                         </tr>";
                     }
                     echo "</table>";

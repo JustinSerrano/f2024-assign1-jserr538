@@ -46,27 +46,6 @@ try {
         </nav>
     </header>
     <main>
-        <!-- Search form container -->
-        <section class="search-container">
-            <form method="get" action="<?= $_SERVER['REQUEST_URI'] ?>">
-                <label for="ref">Select Driver: </label>
-                <select name="ref" id="ref" required>
-                    <option value="" disabled selected>-- Select a Driver --</option>
-                    <?php
-                    if ($allDrivers) {
-                        foreach ($allDrivers as $driverOption) {
-                            echo "<option value='" . htmlspecialchars($driverOption['driverRef']) . "'>" .
-                                htmlspecialchars($driverOption['fullname']) . "</option>";
-                        }
-                    } else {
-                        echo "<option disabled>No drivers available</option>";
-                    }
-                    ?>
-                </select>
-                <button type="submit">Search</button>
-            </form>
-        </section>
-
         <!-- Driver details and race results layout -->
         <div class="content-container">
             <!-- Driver details container -->
@@ -75,9 +54,12 @@ try {
                 if ($driver) {
                     // Grab element values and set them in variables
                     $fullname = htmlspecialchars($driver['fullname']);
-                    $dob = htmlspecialchars(date_format(new DateTime($driver['dob']), "F j, Y"));
                     $nationality = htmlspecialchars($driver['nationality']);
                     $url = htmlspecialchars($driver['url']);
+
+                    $dateObject = new DateTime($driver['dob']);
+                    $formattedDate = date_format($dateObject, "F j, Y");
+                    $dob = htmlspecialchars($formattedDate);
 
                     // Output the driver information
                     echo "<h2>Driver Information</h2>
@@ -104,11 +86,18 @@ try {
                             <th>Points</th>
                         </tr>";
                     foreach ($raceResults as $result) {
+                        // Grab element values and set them in variables
+                        $round = htmlspecialchars($result['round']);
+                        $name = htmlspecialchars($result['name']);
+                        $position = htmlspecialchars($result['position']);
+                        $points = htmlspecialchars($result['points']);
+                        
+                        // Output race results
                         echo "<tr>
-                            <td>" . htmlspecialchars($result['round']) . "</td>
-                            <td>" . htmlspecialchars($result['name']) . "</td>
-                            <td>" . htmlspecialchars($result['position']) . "</td>
-                            <td>" . htmlspecialchars($result['points']) . "</td>
+                            <td>$round</td>
+                            <td>$name</td>
+                            <td>$position</td>
+                            <td>$points</td>
                         </tr>";
                     }
                     echo "</table>";

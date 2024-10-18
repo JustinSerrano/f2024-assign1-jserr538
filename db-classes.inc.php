@@ -143,7 +143,7 @@ class RaceDB
     }
     public function getAll()
     {
-        $sql = self::$baseSQL. " WHERE year = 2023 ORDER BY round";
+        $sql = self::$baseSQL . " WHERE year = 2023 ORDER BY round";
         $statement =
             DatabaseHelper::runQuery($this->pdo, $sql, null);
         return $statement->fetchAll();
@@ -154,9 +154,37 @@ class RaceDB
                 c.name AS circuitName, c.location, c.country
                 FROM races r
                 JOIN circuits c ON r.circuitId = c.circuitId
-                WHERE r.raceId = ?";
+                WHERE r.raceId = ?
+                ORDER BY r.round";
         $statement =
             DatabaseHelper::runQuery($this->pdo, $sql, array($raceId));
         return $statement->fetch();
+    }
+    public function getQualifiedDrivers($raceId)
+    {
+        $sql = "SELECT q.position, (d.forename || ' ' || d.surname) AS fullname, d.driverRef,
+                    c.constructorRef, c.name AS constructorName, q.q1, q.q2, q.q3
+                FROM qualifying q
+                JOIN races r ON q.raceId = r.raceId
+                JOIN drivers d ON q.driverId = d.driverId
+                JOIN constructors c ON q.constructorId = c.constructorID
+                WHERE q.raceId = ?
+                ORDER BY q.position";
+        $statement =
+            DatabaseHelper::runQuery($this->pdo, $sql, array($raceId));
+        return $statement->fetchAll();
+    }
+    public function getRaceResults($raceId)
+    {
+        $sql = "SELECT res.position, (d.forename || ' ' || d.surname) AS fullname,
+                    res.laps, res.points
+                FROM results res
+                JOIN races r ON res.raceId = r.raceId
+                JOIN drivers d ON res.driverId = d.driverId
+                WHERE res.raceId = ?
+                ORDER BY res.position";
+        $statement =
+            DatabaseHelper::runQuery($this->pdo, $sql, array($raceId));
+        return $statement->fetchAll();
     }
 }

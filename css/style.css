@@ -62,9 +62,6 @@ main {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
     margin-right: 20px;
     text-align: left;
-    h3 {
-        text-align: center;
-    }
 }
 
 /* Race results section */
@@ -74,6 +71,9 @@ main {
     padding: 15px;
     background-color: #fff;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+.race-results h2 {
+    text-align: center;
 }
 
 /* Table styling for race results */
