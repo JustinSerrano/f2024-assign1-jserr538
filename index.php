@@ -1,8 +1,8 @@
 <?php
 
 // Required to connect to the f1 database
-require_once "config.inc.php";
-require_once "db-classes.inc.php";
+require_once "includes/config.inc.php";
+require_once "includes/db-classes.inc.php";
 
 ?>
 <!DOCTYPE html>

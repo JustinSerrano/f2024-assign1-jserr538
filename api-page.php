@@ -1,8 +1,8 @@
 <?php
 
 // Required to connect to the f1 database
-require_once "config.inc.php";
-require_once "db-classes.inc.php";
+require_once "includes/config.inc.php";
+require_once "includes/db-classes.inc.php";
 
 ?>
 <!DOCTYPE html>
@@ -28,10 +28,10 @@ require_once "db-classes.inc.php";
         <div class="content">
             <section class="sidebar">
                 <ul>
-                    <li><a href="/api/circuits.php">/api/circuits.php</a></li>
-                    <li><a href="/api/circuits.php?ref=monaco">/api/circuits.php?ref=monaco</a></li>
-                    <li><a href="/api/constructors.php">/api/constructors.php</a></li>
-                    <li><a href="/api/constructors.php?ref=mclaren">/api/constructors.php?ref=mclaren</a></li>
+                    <li><a href="api\circuits.php">api\circuits.php</a></li>
+                    <li><a href="api\circuits.php?ref=monaco">api\circuits.php?ref=monaco</a></li>
+                    <li><a href="api\constructors.php">api\constructors.php</a></li>
+                    <li><a href="api\constructors.php?ref=mclaren">api\constructors.php?ref=mclaren</a></li>
                 </ul>
             </section>
         </div>
