@@ -1,4 +1,14 @@
+/* Credits to ChatGPT*/
+
 /* General page styles */
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -8,15 +18,19 @@ body {
     height: 100%;
 }
 
-header {
-    background-color: #333;
-    color: white;
-    padding: 10px;
-    text-align: center;
+main {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    flex-grow: 1;
 }
 
+/* Layout and style for navigation */
 nav {
     margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 nav a {
@@ -29,13 +43,6 @@ nav a:hover {
     text-decoration: underline;
 }
 
-/* Layout for main content */
-main {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-}
-
 /* Search form section */
 .search-container {
     width: 100%;
@@ -46,63 +53,7 @@ main {
     text-align: center;
 }
 
-/* Sidebar details and race results container */
-.content-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px;
-}
-
-/* Sidebar details section */
-.sidebar-details {
-    width: 25%;
-    margin: 0 auto;
-    padding: 15px 50px 15px 50px;
-    background-color: #f4f4f4;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-    margin-right: 20px;
-    text-align: left;
-}
-
-/* Race results section */
-.race-results {
-    flex-grow: 1;
-    /* Allows this container to take the remaining space */
-    padding: 15px;
-    background-color: #fff;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-}
-.race-results h2 {
-    text-align: center;
-}
-
-/* Table styling for race results */
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-table th,
-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-}
-
-table th {
-    background-color: #333;
-    color: white;
-}
-
-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-table tr:hover {
-    background-color: #f1f1f1;
-}
-
-button {
+.search-container button {
     margin-top: 10px;
     padding: 8px 15px;
     background-color: #333;
@@ -111,6 +62,170 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.search-container button:hover {
     background-color: #555;
+}
+
+/* Content container using flexbox */
+.content-container {
+    display: flex;
+    gap: 20px;
+    padding: 15px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    max-width: 100%;
+}
+
+.no-content {
+    text-align: center;
+}
+
+/* Sidebar details section */
+.sidebar-details {
+    flex: 0 1 auto;
+    padding: 15px;
+    background-color: #f4f4f4;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Qualifying results section */
+.qualifying-results {
+    flex: 1 1 auto;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.qualifying-results h2 {
+    text-align: center;
+}
+
+/* Table styling for race results */
+.qualifying-results table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.qualifying-results table th,
+.qualifying-results table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+/* Header styling */
+.qualifying-results table th {
+    background-color: #333;
+    color: white;
+}
+
+.qualifying-results table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.qualifying-results table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Results placement section */
+.results-placement {
+    flex: 1 1 auto;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.results-placement h2 {
+    text-align: center;
+}
+
+/* Table styling for results placement */
+.results-placement table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.results-placement table th,
+.results-placement table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+/* Specific styling for positions */
+/* Header styling */
+.results-placement table th {
+    background-color: #333;
+    color: white;
+}
+
+/* General row background color */
+.results-placement table tr {
+    background-color: #f9f9f9;
+}
+
+/* 1st place - Gold */
+.results-placement table tr.first-place {
+    background-color: #ffd700;
+    /* Gold */
+}
+
+/* 2nd place - Silver */
+.results-placement table tr.second-place {
+    background-color: #c0c0c0;
+    /* Silver */
+}
+
+/* 3rd place - Bronze */
+.results-placement table tr.third-place {
+    background-color: #cd7f32;
+    /* Bronze */
+}
+
+/* DNF - Gray */
+.results-placement table tr.dnf {
+    background-color: #d3d3d3;
+    /* Light Gray */
+}
+
+/* Race results section */
+.race-results {
+    flex-grow: 1;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.race-results h2 {
+    text-align: center;
+}
+
+/* Table styling for race results */
+.race-results table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.race-results table,
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+/* Header styling */
+.race-results table th {
+    background-color: #333;
+    color: white;
+}
+
+.race-results table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.race-results table tr:hover {
+    background-color: #f1f1f1;
 }
