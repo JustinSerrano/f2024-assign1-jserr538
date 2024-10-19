@@ -21,12 +21,11 @@ try {
         $raceResults = $constructorGateway->getConstructorRaceResults($_GET['ref']);
         $content .=
             "<!-- Constructor details and race results layout -->
-        <div class='content-container'>
+        <div class='content'>
             <!-- Constructor details container -->
-            <section class='sidebar-details'>$constructor</section>
-
+            <section class='sidebar'>$constructor</section>
             <!-- Race results container -->
-            <section class='race-results'>$raceResults</section>
+            <section class='results'>$raceResults</section>
         </div>";
     } else {
         $constructor = null;

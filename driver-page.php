@@ -21,12 +21,11 @@ try {
         $raceResults = $driverGateway->getDriverRaceResults($_GET['ref']);
         $content .=
             "<!-- Driver details and race results layout -->
-            <div class='content-container'>
+            <div class='content'>
                 <!-- Driver details container -->
-                <section class='sidebar-details'>$driver</section>
-
+                <section class='sidebar'>$driver</section>
                 <!-- Race results container -->
-                <section class='race-results'>$raceResults</section>
+                <section class='results'>$raceResults</section>
             </div>";
     } else {
         $driver = null;

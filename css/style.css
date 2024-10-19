@@ -43,8 +43,8 @@ nav a:hover {
     text-decoration: underline;
 }
 
-/* Search form section */
-.search-container {
+/* Search container */
+.search {
     width: 100%;
     padding: 15px;
     margin-bottom: 20px;
@@ -53,7 +53,7 @@ nav a:hover {
     text-align: center;
 }
 
-.search-container button {
+.search button {
     margin-top: 10px;
     padding: 8px 15px;
     background-color: #333;
@@ -62,12 +62,12 @@ nav a:hover {
     cursor: pointer;
 }
 
-.search-container button:hover {
+.search button:hover {
     background-color: #555;
 }
 
 /* Content container using flexbox */
-.content-container {
+.content {
     display: flex;
     gap: 20px;
     padding: 15px;
@@ -80,152 +80,79 @@ nav a:hover {
     text-align: center;
 }
 
-/* Sidebar details section */
-.sidebar-details {
+/* Sidebar container */
+.sidebar {
     flex: 0 1 auto;
     padding: 15px;
     background-color: #f4f4f4;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Qualifying results section */
-.qualifying-results {
+/* Results container */
+.results {
     flex: 1 1 auto;
     padding: 15px;
     background-color: #fff;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.qualifying-results h2 {
+.results h2 {
     text-align: center;
 }
 
-/* Table styling for race results */
-.qualifying-results table {
+/* Table styling for results */
+.results table {
     width: 100%;
     border-collapse: collapse;
     margin: 0 auto;
 }
 
-.qualifying-results table th,
-.qualifying-results table td {
+.results table th,
+.results table td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: center;
 }
 
 /* Header styling */
-.qualifying-results table th {
+.results table th {
     background-color: #333;
     color: white;
 }
-
-.qualifying-results table tr:nth-child(even) {
-    background-color: #f9f9f9;
+/* General row background color */
+.results table tr {
+    background-color: white;
 }
 
-.qualifying-results table tr:hover {
+/* .results table tr:nth-child(even) {
+    background-color: #f0f0f0;
+} */
+
+.results table tr:hover {
     background-color: #f1f1f1;
 }
 
-/* Results placement section */
-.results-placement {
-    flex: 1 1 auto;
-    padding: 15px;
-    background-color: #fff;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.results-placement h2 {
-    text-align: center;
-}
-
 /* Table styling for results placement */
-.results-placement table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0 auto;
-}
-
-.results-placement table th,
-.results-placement table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-}
-
-/* Specific styling for positions */
-/* Header styling */
-.results-placement table th {
-    background-color: #333;
-    color: white;
-}
-
-/* General row background color */
-.results-placement table tr {
-    background-color: #f9f9f9;
-}
-
 /* 1st place - Gold */
-.results-placement table tr.first-place {
+.placement table tr.first-place {
     background-color: #ffd700;
     /* Gold */
 }
 
 /* 2nd place - Silver */
-.results-placement table tr.second-place {
+.placement table tr.second-place {
     background-color: #c0c0c0;
     /* Silver */
 }
 
 /* 3rd place - Bronze */
-.results-placement table tr.third-place {
+.placement table tr.third-place {
     background-color: #cd7f32;
     /* Bronze */
 }
 
 /* DNF - Gray */
-.results-placement table tr.dnf {
+.placement table tr.dnf {
     background-color: #d3d3d3;
     /* Light Gray */
-}
-
-/* Race results section */
-.race-results {
-    flex-grow: 1;
-    padding: 15px;
-    background-color: #fff;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.race-results h2 {
-    text-align: center;
-}
-
-/* Table styling for race results */
-.race-results table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.race-results table,
-th,
-td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-}
-
-/* Header styling */
-.race-results table th {
-    background-color: #333;
-    color: white;
-}
-
-.race-results table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.race-results table tr:hover {
-    background-color: #f1f1f1;
 }

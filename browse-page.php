@@ -23,15 +23,13 @@ try {
         $raceResults = $raceGateway->getRaceResults($_GET['ref']);
         $content .=
             "<!-- Content layout -->
-            <div class='content-container'>
+            <div class='content'>
                 <!-- Race details container -->
-                <section class='sidebar-details'>$race</section>
-
+                <section class='sidebar'>$race</section>
                 <!-- Qualifying drivers container -->
-                <section class='qualifying-results'>$qualifiedDrivers</section>
-
+                <section class='results'>$qualifiedDrivers</section>
                 <!-- Race results container -->
-                <section class='results-placement'>$raceResults</section>
+                <section class='results placement'>$raceResults</section>
             </div>";
     } else {
         $race = null;
@@ -66,7 +64,7 @@ try {
     </header>
     <main>
         <!-- Search form container -->
-        <section class="search-container">
+        <section class="search">
             <form method="get" action="<?= $_SERVER['REQUEST_URI'] ?>">
                 <label for="ref">Select Race: </label>
                 <select name="ref" id="ref" required>

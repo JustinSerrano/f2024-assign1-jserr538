@@ -100,9 +100,9 @@ class DriverDB
         $markup .= "<h2>Race Results</h2>
                     <table border='1'>
                         <tr>
-                            <th>Rnd</th>
+                            <th>Round #</th>
                             <th>Circuit</th>
-                            <th>Pos</th>
+                            <th>Position</th>
                             <th>Points</th>
                         </tr>";
         foreach ($data as $row) {
@@ -110,6 +110,9 @@ class DriverDB
             $round = htmlspecialchars($row['round']);
             $name = htmlspecialchars($row['name']);
             $position = htmlspecialchars($row['position']);
+            if (empty($position)) {
+                $position = "DNF";
+            }
             $points = htmlspecialchars($row['points']);
 
             // Output race results
@@ -178,10 +181,10 @@ class ConstructorDB
         $markup .= "<h2>Race Results</h2>
                     <table border='1'>
                         <tr>
-                            <th>Rnd</th>
+                            <th>Round #</th>
                             <th>Circuit</th>
                             <th>Driver</th>
-                            <th>Pos</th>
+                            <th>Position</th>
                             <th>Points</th>
                         </tr>";
         foreach ($data as $row) {
@@ -190,6 +193,9 @@ class ConstructorDB
             $raceName = htmlspecialchars($row['raceName']);
             $fullname = htmlspecialchars($row['fullname']);
             $position = htmlspecialchars($row['position']);
+            if (empty($position)) {
+                $position = "DNF";
+            }
             $points = htmlspecialchars($row['points']);
 
             // Output race results
@@ -280,7 +286,7 @@ class RaceDB
         $markup .= "<h2>Qualifying</h2>
                     <table border='1'>
                         <tr>
-                            <th>Pos</th>
+                            <th>Position</th>
                             <th>Driver</th>
                             <th>Constructor</th>
                             <th>Q1</th>
@@ -326,24 +332,22 @@ class RaceDB
         $markup .= "<h2>Results</h2>
                     <table border='1'>
                         <tr>
-                            <th>Pos</th>
+                            <th>Position</th>
                             <th>Driver</th>
                             <th>Laps</th>
-                            <th>Pts</th>
+                            <th>Points</th>
                         </tr>";
         foreach ($data as $row) {
             // Grab element values and set them in variables
             $rowClass = "";
-            if (!empty($row['position'])) {
-                $position = htmlspecialchars($row['position']);
-                if ($position == '1') {
-                    $rowClass = "first-place";
-                } elseif ($position == "2") {
-                    $rowClass = "second-place";
-                } elseif ($position == "3") {
-                    $rowClass = "third-place";
-                }
-            } else {
+            $position = htmlspecialchars($row['position']);
+            if ($position == '1') {
+                $rowClass = "first-place";
+            } elseif ($position == "2") {
+                $rowClass = "second-place";
+            } elseif ($position == "3") {
+                $rowClass = "third-place";
+            } elseif (empty($position)) {
                 $position = "DNF";
                 $rowClass = "dnf";
             }
