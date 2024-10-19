@@ -40,46 +40,40 @@ the passed array of parameters (null if none)
         return $statement;
     }
 }
-class DriverDB
+class CircuitDB
 {
     private $pdo;
-    private static $baseSQL =  "SELECT (forename || ' '|| surname) AS fullname, 
-                                driverRef, dob, nationality, url FROM drivers";
+    private static $baseSQL =  
+                "SELECT *
+                FROM circuits c
+                JOIN races r ON c.circuitId = r.circuitId
+                WHERE r.year = 2022";
     public function __construct($connection)
     {
         $this->pdo = $connection;
     }
-    public function getDriver($driverRef)
+    public function getAll()
     {
-        $sql = self::$baseSQL . " WHERE driverRef =?";
-        $statement = DatabaseHelper::runQuery(
-            $this->pdo,
-            $sql,
-            array($driverRef)
-        );
-        return $statement->fetch();
-    }
-    public function getDriverRaceResults($driverRef)
-    {
-        $sql =  "SELECT (d.forename || ' '|| d.surname) AS fullname, d.dob, d.nationality, 
-                    d.url, ra.round, ra.name, res.position, res.points
-                FROM drivers d
-                JOIN results res ON d.driverId = res.driverId
-                JOIN races ra ON ra.raceId = res.raceId
-                WHERE d.driverRef = ? AND ra.year = 2023
-                ORDER BY ra.round";
-        $statement = DatabaseHelper::runQuery(
-            $this->pdo,
-            $sql,
-            array($driverRef)
-        );
+        $sql = self::$baseSQL. " ORDER BY r.round";
+        $statement = DatabaseHelper::runQuery($this->pdo, $sql, null);
         return $statement->fetchAll();
+    }
+    public function getCircuit($circuitRef)
+    {
+        $sql = self::$baseSQL . " AND circuitRef=? ORDER BY r.round";
+        $statement = DatabaseHelper::runQuery($this->pdo, $sql, array($circuitRef));
+        return $statement->fetch();
     }
 }
 class ConstructorDB
 {
     private $pdo;
-    private static $baseSQL =  "SELECT * FROM constructors";
+    private static $baseSQL =  
+            "SELECT c.constructorId, c.constructorRef, c.name, c.nationality, c.url
+            FROM constructors c
+            JOIN qualifying q ON q.constructorId = c.constructorId
+            JOIN races r ON r.raceId = q.raceId
+            WHERE r.year = 2022";
     public function __construct($connection)
     {
         $this->pdo = $connection;
@@ -92,7 +86,7 @@ class ConstructorDB
     }
     public function getConstructor($constructorRef)
     {
-        $sql = self::$baseSQL . " WHERE constructorRef =?";
+        $sql = self::$baseSQL . " AND c.constructorRef =?";
         $statement = DatabaseHelper::runQuery(
             $this->pdo,
             $sql,
@@ -111,7 +105,7 @@ class ConstructorDB
                 JOIN drivers d ON res.driverId = d.driverId
                 JOIN races ra ON ra.raceId = cr.raceId
                 WHERE c.constructorRef = ?
-                    AND ra.year = 2023
+                    AND ra.year = 2022
                 ORDER BY ra.round";
         $statement = DatabaseHelper::runQuery(
             $this->pdo,
@@ -121,6 +115,62 @@ class ConstructorDB
         return $statement->fetchAll();
     }
 }
+class DriverDB
+{
+    private $pdo;
+    private static $baseSQL =  "SELECT d.driverId, d.driverRef, d.number, d.code,
+                                    d.forename, d.surname, d.dob, d.nationality, d.url 
+                                FROM drivers d
+                                JOIN qualifying q ON q.driverId = d.driverID
+                                JOIN races r ON r.raceId = q.raceId";
+    public function __construct($connection)
+    {
+        $this->pdo = $connection;
+    }
+    public function getAll()
+    {
+        $sql = self::$baseSQL . " WHERE r.year = 2022";
+        $statement = DatabaseHelper::runQuery($this->pdo, $sql, null);
+        return $statement->fetchAll();
+    }
+    public function getDriver($driverRef)
+    {
+        $sql = self::$baseSQL . " WHERE r.year = 2022 AND driverRef =?";
+        $statement = DatabaseHelper::runQuery(
+            $this->pdo,
+            $sql,
+            array($driverRef)
+        );
+        return $statement->fetch();
+    }
+    public function getDriversFromRace($raceId)
+    {
+        $sql = self::$baseSQL . " WHERE r.raceId =?";
+        $statement = DatabaseHelper::runQuery(
+            $this->pdo,
+            $sql,
+            array($raceId)
+        );
+        return $statement->fetch();
+    }
+    public function getDriverRaceResults($driverRef)
+    {
+        $sql =  "SELECT (d.forename || ' '|| d.surname) AS fullname, d.dob, d.nationality, 
+                    d.url, ra.round, ra.name, res.position, res.points
+                FROM drivers d
+                JOIN results res ON d.driverId = res.driverId
+                JOIN races ra ON ra.raceId = res.raceId
+                WHERE d.driverRef = ? AND ra.year = 2022
+                ORDER BY ra.round";
+        $statement = DatabaseHelper::runQuery(
+            $this->pdo,
+            $sql,
+            array($driverRef)
+        );
+        return $statement->fetchAll();
+    }
+}
+
 class RaceDB
 {
     private $pdo;
@@ -131,7 +181,7 @@ class RaceDB
     }
     public function getAll()
     {
-        $sql = self::$baseSQL . " WHERE year = 2023 ORDER BY round";
+        $sql = self::$baseSQL . " WHERE year = 2022 ORDER BY round";
         $statement = DatabaseHelper::runQuery($this->pdo, $sql, null);
         return $statement->fetchAll();
     }
@@ -145,7 +195,6 @@ class RaceDB
                 ORDER BY r.round";
         $statement = DatabaseHelper::runQuery($this->pdo, $sql, array($raceId));
         return $statement->fetch();
-
     }
     public function getQualifiedDrivers($raceId)
     {
@@ -173,24 +222,4 @@ class RaceDB
         return $statement->fetchAll();
     }
 }
-class CircuitDB
-{
-    private $pdo;
-    private static $baseSQL =  "SELECT * FROM circuits";
-    public function __construct($connection)
-    {
-        $this->pdo = $connection;
-    }
-    public function getAll()
-    {
-        $sql = self::$baseSQL;
-        $statement = DatabaseHelper::runQuery($this->pdo, $sql, null);
-        return $statement->fetchAll();
-    }
-    public function getCircuit($circuitRef)
-    {
-        $sql = self::$baseSQL . " WHERE circuitRef=?";
-        $statement = DatabaseHelper::runQuery($this->pdo, $sql, array($circuitRef));
-        return $statement->fetch();
-    }
-}
+

@@ -15,7 +15,7 @@ try {
         $driver = $driverGateway->getDriver($_GET['ref']);
         if ($driver) {
             // Grab element values and set them in variables
-            $fullname = htmlspecialchars($driver['fullname']);
+            $fullname = htmlspecialchars($driver['forename']). ' '. htmlspecialchars($driver['surname']);
             $nationality = htmlspecialchars($driver['nationality']);
             $url = htmlspecialchars($driver['url']);
 

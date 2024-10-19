@@ -32,6 +32,14 @@ require_once "includes/db-classes.inc.php";
                     <li><a href="api\circuits.php?ref=monaco">api\circuits.php?ref=monaco</a></li>
                     <li><a href="api\constructors.php">api\constructors.php</a></li>
                     <li><a href="api\constructors.php?ref=mclaren">api\constructors.php?ref=mclaren</a></li>
+                    <li><a href="api\drivers.php">api\drivers.php</a></li>
+                    <li><a href="api\drivers.php?ref=hamilton">api\drivers.php?ref=hamilton</a></li>
+                    <li><a href="api\drivers.php?race=1106">api\drivers.php?race=1106</a></li>
+                    <li><a href="api\races.php">api\races.php</a></li>
+                    <li><a href="api\races.php?ref=1106">api\races.php?ref=1106</a></li>
+                    <li><a href="api\qualifying.php?ref=1106">api\qualifying.php?ref=1106</a></li>
+                    <li><a href="api\results.php?ref=1106">api\results.php?ref=1106</a></li>
+                    <li><a href="api\results.php?driver=max_verstappen">api\results.php?driver=max_verstappen</a></li>
                 </ul>
             </section>
         </div>
