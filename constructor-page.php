@@ -8,6 +8,7 @@ try {
     // Connect and retrieve data from ConstructorDB
     $conn = DatabaseHelper::createConnection(DBCONNSTRING);
     $constructorGateway = new ConstructorDB($conn);
+    $resultGateway = new ResultDB($conn);
     $content = "";
 
     // Retrieve constructor details
@@ -32,47 +33,50 @@ try {
             </section>";
         }
 
-        $raceResults = $constructorGateway->getConstructorRaceResults($_GET['ref']);
-        if ($raceResults) {
-            $content .= 
+        $results = $resultGateway->getResultsFromConstructor($_GET['ref']);
+        if ($results) {
+            $content .=
                 "<!-- Race results container -->
-                <section class='results'>
+                <section class='results constructor'>
                 <h2>Race Results</h2>
                     <table border='1'>
+                    <thead>
                         <tr>
                             <th>Round #</th>
                             <th>Circuit</th>
                             <th>Driver</th>
                             <th>Position</th>
                             <th>Points</th>
-                        </tr>";
-            foreach ($raceResults as $row) {
+                        </tr>
+                    </thead>
+                    <tbody>";
+            foreach ($results as $row) {
                 // Grab element values and set them in variables
                 $round = htmlspecialchars($row['round']);
                 $raceName = htmlspecialchars($row['raceName']);
-                $fullname = htmlspecialchars($row['fullname']);
-                $position = htmlspecialchars($row['position']);
-                if (empty($position)) {
-                    $position = "DNF";
-                }
+                $fullname = htmlspecialchars($row['forename']) . ' ' . htmlspecialchars($row['surname']);
+                $position = htmlspecialchars($row['positionText']);
                 $points = htmlspecialchars($row['points']);
 
                 // Output race results
-                $content .= "<tr>
-                            <td>$round</td>
-                            <td>$raceName</td>
-                            <td>$fullname</td>
-                            <td>$position</td>
-                            <td>$points</td>
-                        </tr>";
+                $content .=
+                            "<tr>
+                                <td>$round</td>
+                                <td>$raceName</td>
+                                <td>$fullname</td>
+                                <td>$position</td>
+                                <td>$points</td>
+                            </tr>
+                        ";
             }
-            $content .= "</table>
-                    </section>
-                </div>";
+            $content .= "</tbody>
+                    </table>
+                </section>
+            </div>";
         }
     } else {
         $constructor = null;
-        $raceResults = null;
+        $results = null;
         $content .=
             "<div class='no-content'>
                 <h1>No results. Return to <a href='browser-page.php'>Browser Page</a> for results.</h1>

@@ -119,40 +119,39 @@ nav a:hover {
     background-color: #333;
     color: white;
 }
+
 /* General row background color */
 .results table tr {
     background-color: white;
 }
 
-/* .results table tr:nth-child(even) {
-    background-color: #f0f0f0;
-} */
+/* Altering row pair background color */
+.constructor tbody tr:nth-child(4n-3),
+.constructor tbody tr:nth-child(4n-2) {
+    background-color: white;
+}
+
+.constructor tbody tr:nth-child(4n-1),
+.constructor tbody tr:nth-child(4n) {
+    background-color: #f1f1f1;
+}
 
 .results table tr:hover {
-    background-color: #f1f1f1;
+    background-color: #d3d3d3;
 }
 
 /* Table styling for results placement */
 /* 1st place - Gold */
-.placement table tr.first-place {
-    background-color: #ffd700;
-    /* Gold */
+.placement table tr:first-child {
+    background-color: gold;
 }
 
 /* 2nd place - Silver */
-.placement table tr.second-place {
-    background-color: #c0c0c0;
-    /* Silver */
+.placement table tr:nth-child(2) {
+    background-color: silver;
 }
 
 /* 3rd place - Bronze */
-.placement table tr.third-place {
+.placement table tr:nth-child(3) {
     background-color: #cd7f32;
-    /* Bronze */
-}
-
-/* DNF - Gray */
-.placement table tr.dnf {
-    background-color: #d3d3d3;
-    /* Light Gray */
 }

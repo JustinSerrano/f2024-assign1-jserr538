@@ -8,6 +8,7 @@ try {
     // Connect and retrieve data from DriverDB
     $conn = DatabaseHelper::createConnection(DBCONNSTRING);
     $driverGateway = new DriverDB($conn);
+    $resultGateway = new ResultDB($conn);
     $content = "";
 
     // Retrieve driver details
@@ -38,44 +39,45 @@ try {
         }
 
         // Get race results for driver
-        $raceResults = $driverGateway->getDriverRaceResults($_GET['ref']);
-        if ($raceResults) {
+        $results = $resultGateway->getResultsFromDriver($_GET['ref']);
+        if ($results) {
             $content .= "
                 <!-- Race results container -->
                 <section class='results'>
                 <h2>Race Results</h2>
                     <table border='1'>
+                    <thead>
                         <tr>
                             <th>Round #</th>
                             <th>Circuit</th>
                             <th>Position</th>
                             <th>Points</th>
-                        </tr>";
-            foreach ($raceResults as $row) {
+                        </tr>
+                    </thead>
+                    <tbody>";
+            foreach ($results as $row) {
                 // Grab element values and set them in variables
                 $round = htmlspecialchars($row['round']);
-                $name = htmlspecialchars($row['name']);
-                $position = htmlspecialchars($row['position']);
-                if (empty($position)) {
-                    $position = "DNF";
-                }
+                $raceName = htmlspecialchars($row['raceName']);
+                $position = htmlspecialchars($row['positionText']);
                 $points = htmlspecialchars($row['points']);
 
                 // Output race results
                 $content .= "<tr>
                             <td>$round</td>
-                            <td>$name</td>
+                            <td>$raceName</td>
                             <td>$position</td>
                             <td>$points</td>
                         </tr>";
             }
-            $content . "</table>
-                    </section>
-                </div>";
+            $content . "</tbody>
+                    </table>
+                </section>
+            </div>";
         }
     } else {
         $driver = null;
-        $raceResults = null;
+        $results = null;
         $content .=
             "<div class='no-content'>
                 <h1>No results. Return to <a href='browser-page.php'>Browser Page</a> for results.</h1>

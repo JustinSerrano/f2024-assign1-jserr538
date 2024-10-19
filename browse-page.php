@@ -8,6 +8,8 @@ try {
     // Connect and retrieve data from RaaceDB
     $conn = DatabaseHelper::createConnection(DBCONNSTRING);
     $raceGateway = new RaceDB($conn);
+    $qualifyingGateway = new QualifyingDB($conn);
+    $resultGateway = new ResultDB($conn);
 
     // Markup for search content
     $allRaces = $raceGateway->getAll();
@@ -35,7 +37,7 @@ try {
     $content = "";
     // Retrieve race details
     if (isset($_GET['ref']) && !empty($_GET['ref'])) {
-        $race = $raceGateway->getRaceDetails($_GET['ref']);
+        $race = $raceGateway->getRace($_GET['ref']);
         // Grab element values and set them in variables
         $raceName = htmlspecialchars($race['raceName']);
         $round = htmlspecialchars($race['round']);
@@ -64,12 +66,13 @@ try {
                     <p><strong>URL: </strong><a href='$url'>Wikipedia</a></p>
                 </section>";
 
-        $qualifiedDrivers = $raceGateway->getQualifiedDrivers($_GET['ref']);
+        $qualifiers = $qualifyingGateway->getQualifiers($_GET['ref']);
         $content .=
             "<!-- Qualifying drivers container -->
                 <section class='results'>
                 <h2>Qualifying</h2>
                     <table border='1'>
+                    <thead>
                         <tr>
                             <th>Position</th>
                             <th>Driver</th>
@@ -77,12 +80,14 @@ try {
                             <th>Q1</th>
                             <th>Q2</th>
                             <th>Q3</th>
-                        </tr>";
-        foreach ($qualifiedDrivers as $row) {
+                        </tr>
+                    </thead>
+                    <tbody>";
+        foreach ($qualifiers as $row) {
             // Grab element values and set them in variables
             $position = htmlspecialchars($row['position']);
             $driverRef = htmlspecialchars($row['driverRef']);
-            $driver = htmlspecialchars($row['fullname']);
+            $driver = htmlspecialchars($row['forename']) . ' ' . htmlspecialchars($row['surname']);
             $constructorRef = htmlspecialchars($row['constructorRef']);
             $constructor = htmlspecialchars($row['constructorName']);
             $q1 = htmlspecialchars($row['q1']);
@@ -99,54 +104,48 @@ try {
                             <td>$q3</td>
                         </tr>";
         }
-        $content .= "</table>
-                </section>";
+        $content .= "</tbody>
+                </table>
+            </section>";
 
-        $raceResults = $raceGateway->getRaceResults($_GET['ref']);
+        $results = $resultGateway->getResultsFromRace($_GET['ref']);
         $content .=
             "<!-- Race results container -->
                 <section class='results placement'>
                 <h2>Results</h2>
                     <table border='1'>
+                    <thead>
                         <tr>
                             <th>Position</th>
                             <th>Driver</th>
                             <th>Laps</th>
                             <th>Points</th>
-                        </tr>";
-        foreach ($raceResults as $row) {
+                        </tr>
+                    </thead>
+                    <tbody>";
+        foreach ($results as $row) {
             // Grab element values and set them in variables
-            $rowClass = "";
-            $position = htmlspecialchars($row['position']);
-            if ($position == '1') {
-                $rowClass = "first-place";
-            } elseif ($position == "2") {
-                $rowClass = "second-place";
-            } elseif ($position == "3") {
-                $rowClass = "third-place";
-            } elseif (empty($position)) {
-                $position = "DNF";
-                $rowClass = "dnf";
-            }
-            $driver = htmlspecialchars($row['fullname']);
+            $position = htmlspecialchars($row['positionText']);
+            $driver = htmlspecialchars($row['forename']) . ' ' . htmlspecialchars($row['surname']);
             $laps = htmlspecialchars($row['laps']);
             $points = htmlspecialchars($row['points']);
 
             // Output race results
-            $content .= "<tr class='$rowClass'>
+            $content .= "<tr>
                             <td>$position</td>
                             <td>$driver</td>
                             <td>$laps</td>
                             <td>$points</td>
                         </tr>";
         }
-        $content .= "</table>
-                </section>
-            </div>";
+        $content .= "</tbody>
+                </table>
+            </section>
+        </div>";
     } else {
         $race = null;
-        $qualifiedDrivers = null;
-        $raceResults = null;
+        $qualifiers = null;
+        $results = null;
         $content .=
             "<div class='no-content'>
                 <h1>Please select a race to view contents</h1>

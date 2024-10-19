@@ -25,13 +25,25 @@ require_once "includes/db-classes.inc.php";
     </header>
     <main>
         <!-- Race details and race results layout -->
-        <div class="content-container">
+        <div class="content">
             <!-- List of races container -->
-            <section class="sidebar-details">
+            <section class="sidebar">
+                <p>F1 Dashboard Project is an assignment project assigned to students of COMP 3532 (Fall 2024)</p>
+                <p>This site was created by Justin Serrano</p>
+                <p>Technologies used:</p>
+                <ul>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>PHP</li>
+                    <li>SQLite 3</li>
+                    <li>Visual Studio Code</li>
+                    <li>GitHub</li>
+                </ul>
+                <p>The GitHub repo is <a href='https://github.com/JustinSerrano/f2024-assign1'>here</a></p>
             </section>
 
             <!-- Race results container -->
-            <section class="race-results">
+            <section class="results">
             </section>
     </main>
 </body>
