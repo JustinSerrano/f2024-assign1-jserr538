@@ -25,14 +25,16 @@ require_once "db-classes.inc.php";
     </header>
     <main>
         <!-- Race details and race results layout -->
-        <div class="content-container">
-            <!-- List of races container -->
-            <section class="sidebar-details">
+        <div class="content">
+            <section class="sidebar">
+                <ul>
+                    <li><a href="/api/circuits.php">/api/circuits.php</a></li>
+                    <li><a href="/api/circuits.php?ref=monaco">/api/circuits.php?ref=monaco</a></li>
+                    <li><a href="/api/constructors.php">/api/constructors.php</a></li>
+                    <li><a href="/api/constructors.php?ref=mclaren">/api/constructors.php?ref=mclaren</a></li>
+                </ul>
             </section>
-
-            <!-- Race results container -->
-            <section class="race-results">
-            </section>
+        </div>
     </main>
 </body>
 

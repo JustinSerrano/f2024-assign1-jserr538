@@ -366,3 +366,24 @@ class RaceDB
         return $markup . "</table>";
     }
 }
+class CircuitDB
+{
+    private $pdo;
+    private static $baseSQL =  "SELECT * FROM circuits";
+    public function __construct($connection)
+    {
+        $this->pdo = $connection;
+    }
+    public function getAll()
+    {
+        $sql = self::$baseSQL;
+        $statement = DatabaseHelper::runQuery($this->pdo, $sql, null);
+        $statement->fetchAll();
+    }
+    public function getCircuit($circuitRef)
+    {
+        $sql = self::$baseSQL . " WHERE circuitRef=?";
+        $statement = DatabaseHelper::runQuery($this->pdo, $sql, array($circuitRef));
+        $statement->fetch();
+    }
+}
