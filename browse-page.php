@@ -11,53 +11,44 @@ try {
     $qualifyingGateway = new QualifyingDB($conn);
     $resultGateway = new ResultDB($conn);
 
-    // Markup for search content
+    // Markup for main content
     $allRaces = $raceGateway->getAll();
-    $search = "";
+    $main = "";
     if ($allRaces) {
-        $search .=
-            "<section class='search'>
+        $main .=
+            "<!-- Race details container -->
+            <section class='container'>
             <form method='get' action='" . $_SERVER['REQUEST_URI'] . "'>
                 <label for='ref'>Select Race: </label>
                 <select name='ref' id='ref' required>
                     <option value='' disabled selected>-- Select a Race --</option>";
         foreach ($allRaces as $row) {
-            $search .= "<option value='" . htmlspecialchars($row['raceId']) . "'>" .
+            $main .= "<option value='" . htmlspecialchars($row['raceId']) . "'>" .
                 htmlspecialchars($row['name']) . "</option>";
         }
-        $search .= "</select>
+        $main .= "</select>
                 <button type='submit'>Search</button>
-            </form>
-        </section>";
-    } else {
-        $search .= "No data to retrieve. Please reconfigure connection to database.";
-    }
+            </form>";
 
-    // Markup for main content
-    $content = "";
-    // Retrieve race details
-    if (isset($_GET['ref']) && !empty($_GET['ref'])) {
-        $race = $raceGateway->getRace($_GET['ref']);
-        // Grab element values and set them in variables
-        $raceName = htmlspecialchars($race['raceName']);
-        $round = htmlspecialchars($race['round']);
-        $url = htmlspecialchars($race['url']);
-        $circuitName = htmlspecialchars($race['circuitName']);
-        $location = htmlspecialchars($race['location']);
-        $country = htmlspecialchars($race['country']);
-        // Format Date
-        $dateObject = new DateTime($race['date']);
-        $formattedDate = date_format($dateObject, "F j, Y");
-        $date = htmlspecialchars($formattedDate);
+        // Retrieve race details
+        if (isset($_GET['ref']) && !empty($_GET['ref'])) {
+            $race = $raceGateway->getRace($_GET['ref']);
+            // Grab element values and set them in variables
+            $raceName = htmlspecialchars($race['raceName']);
+            $round = htmlspecialchars($race['round']);
+            $url = htmlspecialchars($race['url']);
+            $circuitName = htmlspecialchars($race['circuitName']);
+            $location = htmlspecialchars($race['location']);
+            $country = htmlspecialchars($race['country']);
+            // Format Date
+            $dateObject = new DateTime($race['date']);
+            $formattedDate = date_format($dateObject, "F j, Y");
+            $date = htmlspecialchars($formattedDate);
 
 
-        // Output the race information
-        $content .=
-            "<!-- Content layout -->
-                <div class='content'>
-                <!-- Race details container -->
-                <section class='sidebar'>
-                    <h2>$raceName</h2>
+            // Output the race information
+            $main .=
+                "<h2>$raceName</h2>
                     <p><strong>Round #: </strong>$round</p>
                     <p><strong>Circuit: </strong>$circuitName</p>
                     <p><strong>Location: </strong>$location</p>
@@ -66,36 +57,37 @@ try {
                     <p><strong>URL: </strong><a href='$url'>Wikipedia</a></p>
                 </section>";
 
-        $qualifiers = $qualifyingGateway->getQualifiers($_GET['ref']);
-        $content .=
-            "<!-- Qualifying drivers container -->
-                <section class='results'>
-                <h2>Qualifying</h2>
-                    <table border='1'>
-                    <thead>
-                        <tr>
-                            <th>Position</th>
-                            <th>Driver</th>
-                            <th>Constructor</th>
-                            <th>Q1</th>
-                            <th>Q2</th>
-                            <th>Q3</th>
-                        </tr>
-                    </thead>
-                    <tbody>";
-        foreach ($qualifiers as $row) {
-            // Grab element values and set them in variables
-            $position = htmlspecialchars($row['position']);
-            $driverRef = htmlspecialchars($row['driverRef']);
-            $driver = htmlspecialchars($row['forename']) . ' ' . htmlspecialchars($row['surname']);
-            $constructorRef = htmlspecialchars($row['constructorRef']);
-            $constructor = htmlspecialchars($row['constructorName']);
-            $q1 = htmlspecialchars($row['q1']);
-            $q2 = htmlspecialchars($row['q2']);
-            $q3 = htmlspecialchars($row['q3']);
+            // Retrieve qualified drivers
+            $qualifiers = $qualifyingGateway->getQualifiers($_GET['ref']);
+            $main .=
+                "<!-- Qualifying drivers container -->
+                    <section class='container'>
+                        <h2>Qualifying</h2>
+                        <table border='1'>
+                            <thead>
+                                <tr>
+                                    <th>Position</th>
+                                    <th>Driver</th>
+                                    <th>Constructor</th>
+                                    <th>Q1</th>
+                                    <th>Q2</th>
+                                    <th>Q3</th>
+                                </tr>
+                            </thead>
+                        <tbody>";
+            foreach ($qualifiers as $row) {
+                // Grab element values and set them in variables
+                $position = htmlspecialchars($row['position']);
+                $driverRef = htmlspecialchars($row['driverRef']);
+                $driver = htmlspecialchars($row['forename']) . ' ' . htmlspecialchars($row['surname']);
+                $constructorRef = htmlspecialchars($row['constructorRef']);
+                $constructor = htmlspecialchars($row['constructorName']);
+                $q1 = htmlspecialchars($row['q1']);
+                $q2 = htmlspecialchars($row['q2']);
+                $q3 = htmlspecialchars($row['q3']);
 
-            // Output qualifying drivers
-            $content .= "<tr>
+                // Output qualifying drivers for race
+                $main .= "<tr>
                             <td>$position</td>
                             <td><a href='driver-page.php?ref=$driverRef'>$driver</a></td>
                             <td><a href='constructor-page.php?ref=$constructorRef'>$constructor</a></td>
@@ -103,53 +95,56 @@ try {
                             <td>$q2</td>
                             <td>$q3</td>
                         </tr>";
-        }
-        $content .= "</tbody>
-                </table>
-            </section>";
+            }
+            $main .= "</tbody>
+                    </table>
+                </section>";
 
-        $results = $resultGateway->getResultsFromRace($_GET['ref']);
-        $content .=
-            "<!-- Race results container -->
-                <section class='results placement'>
-                <h2>Results</h2>
-                    <table border='1'>
-                    <thead>
-                        <tr>
-                            <th>Position</th>
-                            <th>Driver</th>
-                            <th>Laps</th>
-                            <th>Points</th>
-                        </tr>
-                    </thead>
-                    <tbody>";
-        foreach ($results as $row) {
-            // Grab element values and set them in variables
-            $position = htmlspecialchars($row['positionText']);
-            $driver = htmlspecialchars($row['forename']) . ' ' . htmlspecialchars($row['surname']);
-            $laps = htmlspecialchars($row['laps']);
-            $points = htmlspecialchars($row['points']);
+            // Retrieve results from race
+            $results = $resultGateway->getResultsFromRace($_GET['ref']);
+            $main .=
+                "<!-- Race results container -->
+                        <section class='container placement'>
+                        <h2>Results</h2>
+                            <table border='1'>
+                                <thead>
+                                    <tr>
+                                        <th>Position</th>
+                                        <th>Driver</th>
+                                        <th>Laps</th>
+                                        <th>Points</th>
+                                    </tr>
+                                </thead>
+                            <tbody>";
+            foreach ($results as $row) {
+                // Grab element values and set them in variables
+                $position = htmlspecialchars($row['positionText']);
+                $driver = htmlspecialchars($row['forename']) . ' ' . htmlspecialchars($row['surname']);
+                $laps = htmlspecialchars($row['laps']);
+                $points = htmlspecialchars($row['points']);
 
-            // Output race results
-            $content .= "<tr>
+                // Output race results
+                $main .= "<tr>
                             <td>$position</td>
                             <td>$driver</td>
                             <td>$laps</td>
                             <td>$points</td>
                         </tr>";
+            }
+            $main .= "</tbody>
+                    </table>
+                </section>";
+        } else {
+            $main .= "<!-- No content message -->
+            <section class='no-content'>
+                <h1>Please select a race to view contents</h1>
+            </section>";
         }
-        $content .= "</tbody>
-                </table>
-            </section>
-        </div>";
     } else {
         $race = null;
         $qualifiers = null;
         $results = null;
-        $content .=
-            "<div class='no-content'>
-                <h1>Please select a race to view contents</h1>
-            </div>";
+        $main .= "No data to retrieve. Please reconfigure connection to database.";
     }
 } catch (Exception $e) {
     die($e->getMessage());
@@ -173,11 +168,9 @@ try {
             <a href="api-page.php">APIs</a>
         </nav>
     </header>
-    <main>
-        <!-- Search form container -->
-        <?php echo $search ?>
+    <main class="content">
         <!-- Displays content if race selected -->
-        <?php echo $content ?>
+        <?php echo $main ?>
     </main>
 </body>
 
