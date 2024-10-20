@@ -22,6 +22,10 @@ body {
     flex-direction: column;
 }
 
+a:hover {
+    color: #FF1E00;
+}
+
 /* Layout and style for navigation */
 nav {
     margin-top: 10px;
@@ -38,10 +42,6 @@ nav a {
 
 nav a:hover {
     text-decoration: underline;
-}
-
-nav a:active {
-    color: #FF1E00;
 }
 
 /* General layout */
@@ -120,7 +120,7 @@ main {
     margin: 0;
     padding: 10px;
     background-color: #FFFFFF;
-    border: 1px solid #ddd;
+    border: 1px solid #DDD;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
@@ -147,20 +147,51 @@ main {
 section {
     flex: 1 1 auto;
     padding: 15px;
-    background-color: #f4f4f4;
-    border: 1px solid #ccc;
+    background-color: #F4F4F4;
+    border: 1px solid #CCC;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-section.home,
+section.home {
+    flex: none;
+    display: flex;
+    width: min-content;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    background-color: #F4F4F4;
+    border: 1px solid #CCC;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+
+}
+
+.home ul {
+    list-style: none;
+    padding: 0;
+}
+
 section.info,
-section.no-content,
-section.api {
+section.no-content {
     flex: none;
     padding: 15px;
     background-color: #F4F4F4;
     border: 1px solid #CCC;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+section.api {
+    flex: none;
+    align-self: center;
+    width: 750px;
+    padding: 15px;
+    background-color: #F4F4F4;
+    border: 1px solid #CCC;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.api ul {
+    list-style-type: none;
+    padding: 0;
 }
 
 section h2 {
@@ -176,7 +207,7 @@ table {
 
 th,
 td {
-    border: 1px solid #ddd;
+    border: 1px solid #DDD;
     padding: 10px;
     text-align: center;
 }
@@ -193,7 +224,7 @@ tr {
 }
 
 tr:hover {
-    background-color: #d3d3d3;
+    background-color: #D3D3D3;
 }
 
 /* Altering row pair background color 
@@ -203,7 +234,7 @@ tr:hover {
 }
 
 .driver tbody tr:nth-child(even) {
-    background-color: #f1f1f1;
+    background-color: #F1F1F1;
 }
 
 /* Altering row pair background color 
@@ -215,12 +246,12 @@ tr:hover {
 
 .constructor tbody tr:nth-child(4n-1),
 .constructor tbody tr:nth-child(4n) {
-    background-color: #f1f1f1;
+    background-color: #F1F1F1;
 }
 
 .constructor tbody tr:hover,
 .driver tbody tr:hover {
-    background-color: #d3d3d3;
+    background-color: #D3D3D3;
 }
 
 /* Table styling for results placement */

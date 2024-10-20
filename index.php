@@ -2,6 +2,7 @@
 /* Comments and source
 F1 logo: https://logos-world.net/f1-logo/
 Race car wallpaper: https://wall.alphacoders.com/big.php?i=1215632
+MRU logo: https://www.mtroyal.ca/AboutMountRoyal/MarketingCommunications/OurLogo/index.htm
 */
 
 // Required to connect to the f1 database
@@ -33,12 +34,12 @@ require_once "includes/db-classes.inc.php";
     <main>
         <section class="home">
             <div>
-                <img src="https://scontent.fyyc3-1.fna.fbcdn.net/v/t1.6435-9/65016264_2572895552731198_7037461612810207232_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=1d70fc&_nc_ohc=Xb6DJg-g0IAQ7kNvgHNWtiP&_nc_zt=23&_nc_ht=scontent.fyyc3-1.fna&_nc_gid=AAytV3_HTqJI4v1N2M45aLr&oh=00_AYCjpUwFBAO3gn6b_8hMuJm4LABJnOeKmSLwr89piNwHeg&oe=673BFD56"
-                    width="250px" height="250px" />
+                <img src="https://www.mtroyal.ca/AboutMountRoyal/MarketingCommunications/_image/MRU_2c_logo_RGB.png"
+                    width="300px" height="200px" />
             </div>
             <div>
-                <p>F1 Dashboard Project is an assignment project assigned to students of COMP 3532 (Fall 2024)</p>
-                <p>This site was created by Justin Serrano
+                <p>This F1 Dashboard Project assigned by Randy Connolly for students of COMP 3532 (Fall 2024)</p>
+                <p>This site was created by Justin Serrano, 3rd year student at Computer Information student at Mount Royal University.
                     <br>The GitHub repo is <a href='https://github.com/JustinSerrano/f2024-assign1'>here</a>
                 </p>
             </div>

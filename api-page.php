@@ -29,6 +29,7 @@ require_once "includes/db-classes.inc.php";
     <main>
         <!-- Race details and race results layout -->
         <section class="api">
+            <h2>API Testing</h2>
             <ul>
                 <li><a href="api\circuits.php">api\circuits.php</a></li>
                 <li><a href="api\circuits.php?ref=monaco">api\circuits.php?ref=monaco</a></li>
