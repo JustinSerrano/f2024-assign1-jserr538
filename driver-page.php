@@ -1,4 +1,8 @@
 <?php
+/* 
+This file includes code guided with the help of ChatGPT (OpenAI) and W3School.
+Assistance was provided in structuring the race dashboard and database interaction.
+*/
 
 // Required to connect to the f1 database
 require_once "includes/config.inc.php";

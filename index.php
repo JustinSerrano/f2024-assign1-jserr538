@@ -1,5 +1,10 @@
 <?php
-/* Comments and source
+/* 
+This file includes code guided with the help of ChatGPT (OpenAI) and W3School.
+Assistance was provided in structuring the race dashboard and database interaction.
+
+
+Image sources
 F1 logo: https://logos-world.net/f1-logo/
 Race car wallpaper: https://wall.alphacoders.com/big.php?i=1215632
 MRU logo: https://www.mtroyal.ca/AboutMountRoyal/MarketingCommunications/OurLogo/index.htm
