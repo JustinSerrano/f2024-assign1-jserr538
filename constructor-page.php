@@ -23,21 +23,24 @@ try {
             // Output the constructor information
             $content .=
                 "<!-- Constructor details and race results layout -->
-            <div class='content'>
-            <!-- Constructor details container -->
-            <section class='sidebar'>
-            <h2>Constructor Information</h2>
-                <p><strong>Name: </strong>$name</p>
-                <p><strong>Nationality: </strong>$nationality</p>
-                <p><strong>URL: </strong><a href='$url'>Wikipedia</a></p>
-            </section>";
+                <div class='row'>
+                    <!-- Constructor details container -->
+                    <section>
+                        <h2>Constructor Information</h2>
+                        <div class='grid-simple'>
+                        <img src='#' alt='Image File of Constructor Logo' height='25px' weight='25px'/>
+                        <p><strong>Name: </strong>$name</p>
+                        <p><strong>Nationality: </strong>$nationality</p>
+                        <p><strong>URL: </strong><a href='$url'>Wikipedia</a></p>
+                    </div>
+                    </section>";
         }
 
         $results = $resultGateway->getResultsFromConstructor($_GET['ref']);
         if ($results) {
             $content .=
                 "<!-- Race results container -->
-                <section class='results constructor'>
+                <section class='constructor'>
                 <h2>Race Results</h2>
                     <table border='1'>
                     <thead>
@@ -60,14 +63,13 @@ try {
 
                 // Output race results
                 $content .=
-                            "<tr>
-                                <td>$round</td>
-                                <td>$raceName</td>
-                                <td>$fullname</td>
-                                <td>$position</td>
-                                <td>$points</td>
-                            </tr>
-                        ";
+                    "<tr>
+                        <td>$round</td>
+                        <td>$raceName</td>
+                        <td>$fullname</td>
+                        <td>$position</td>
+                        <td>$points</td>
+                    </tr>";
             }
             $content .= "</tbody>
                     </table>
@@ -78,9 +80,9 @@ try {
         $constructor = null;
         $results = null;
         $content .=
-            "<div class='no-content'>
+            "<section class='no-content'>
                 <h1>No results. Return to <a href='browser-page.php'>Browser Page</a> for results.</h1>
-            </div>";
+            </section>";
     }
 } catch (Exception $e) {
     die($e->getMessage());
@@ -97,7 +99,10 @@ try {
 
 <body>
     <header>
-        <h1>F1 Dashboard Project</h1>
+        <div class="title">
+            <img src="https://logos-world.net/wp-content/uploads/2023/12/F1-Logo-500x281.png" height="100px" width="150px" />
+            <h1>F1 Dashboard Project</h1>
+        </div>
         <nav>
             <a href="index.php">Home</a>
             <a href="browse-page.php">Browse</a>

@@ -16,7 +16,7 @@ try {
         $driver = $driverGateway->getDriver($_GET['ref']);
         if ($driver) {
             // Grab element values and set them in variables
-            $fullname = htmlspecialchars($driver['forename']). ' '. htmlspecialchars($driver['surname']);
+            $fullname = htmlspecialchars($driver['forename']) . ' ' . htmlspecialchars($driver['surname']);
             $nationality = htmlspecialchars($driver['nationality']);
             $url = htmlspecialchars($driver['url']);
 
@@ -28,22 +28,26 @@ try {
             // Output the driver information
             $content .=
                 "<!-- Driver details and race results layout -->
-                <div class='content'>
+                <div class='row'>
                 <!-- Driver details container -->
-                <section class='sidebar'><h2>Driver Information</h2>
+                <section>
+                    <h2>Driver Information</h2>
+                    <div class='grid-simple'>
+                    <img src='#' alt='Image File of Driver' height='25px' weight='25px'/>
                     <p><strong>Name: </strong>$fullname</p>
                     <p><strong>Date of Birth: </strong>$dob</p>
                     <p><strong>Nationality: </strong>$nationality</p>
                     <p><strong>URL: </strong><a href='$url'>Wikipedia</a></p>
+                </div>
                 </section>";
         }
 
         // Get race results for driver
         $results = $resultGateway->getResultsFromDriver($_GET['ref']);
         if ($results) {
-            $content .= "
-                <!-- Race results container -->
-                <section class='results'>
+            $content .=
+                "<!-- Race results container -->
+                <section>
                 <h2>Race Results</h2>
                     <table border='1'>
                     <thead>
@@ -98,7 +102,10 @@ try {
 
 <body>
     <header>
-        <h1>F1 Dashboard Project</h1>
+        <div class="title">
+            <img src="https://logos-world.net/wp-content/uploads/2023/12/F1-Logo-500x281.png" height="100px" width="150px" />
+            <h1>Dashboard Project</h1>
+        </div>
         <nav>
             <a href="index.php">Home</a>
             <a href="browse-page.php">Browse</a>

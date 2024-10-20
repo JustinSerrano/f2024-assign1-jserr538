@@ -11,28 +11,26 @@ try {
     $qualifyingGateway = new QualifyingDB($conn);
     $resultGateway = new ResultDB($conn);
 
-    // Markup for main content
+    // Markup for aside content
     $allRaces = $raceGateway->getAll();
-    $main = "";
+    $aside = "";
     if ($allRaces) {
-        $main .=
-            "<!-- Race details container -->
-            <section class='container'>
-            <form method='get' action='" . $_SERVER['REQUEST_URI'] . "'>
-                <label for='ref'>Select Race: </label>
-                <select name='ref' id='ref' required>
-                    <option value='' disabled selected>-- Select a Race --</option>";
+        $aside .= "<!-- All races container -->
+            <h2>Select a Race</h2>
+            <form method='GET' action='" . $_SERVER['REQUEST_URI'] . "'>";
+        $aside .= "<ul>";
         foreach ($allRaces as $row) {
-            $main .= "<option value='" . htmlspecialchars($row['raceId']) . "'>" .
-                htmlspecialchars($row['name']) . "</option>";
+            $aside .= "<li><button type='submit' name='ref' value='" . htmlspecialchars($row['raceId']) . "'>" . htmlspecialchars($row['name']) . "</button></li>";
         }
-        $main .= "</select>
-                <button type='submit'>Search</button>
-            </form>";
+        $aside .= "</ul>";
+        $aside .= "</form>";
 
+        // Markup for main content
+        $main = "";
         // Retrieve race details
         if (isset($_GET['ref']) && !empty($_GET['ref'])) {
             $race = $raceGateway->getRace($_GET['ref']);
+
             // Grab element values and set them in variables
             $raceName = htmlspecialchars($race['raceName']);
             $round = htmlspecialchars($race['round']);
@@ -48,21 +46,26 @@ try {
 
             // Output the race information
             $main .=
-                "<h2>$raceName</h2>
-                    <p><strong>Round #: </strong>$round</p>
-                    <p><strong>Circuit: </strong>$circuitName</p>
-                    <p><strong>Location: </strong>$location</p>
-                    <p><strong>Country: </strong>$country</p>
-                    <p><strong>Date: </strong>$date</p>
-                    <p><strong>URL: </strong><a href='$url'>Wikipedia</a></p>
+                "<!-- Race information -->
+                <section class='info'>
+                    <h2>$raceName</h2>
+                    <div class='grid'>
+                        <p><strong>Round #: </strong>$round</p>
+                        <p><strong>Circuit: </strong>$circuitName</p>
+                        <p><strong>Location: </strong>$location</p>
+                        <p><strong>Country: </strong>$country</p>
+                        <p><strong>Date: </strong>$date</p>
+                        <p><strong>URL: </strong><a href='$url'>Wikipedia</a></p>
+                    </div>
                 </section>";
 
             // Retrieve qualified drivers
             $qualifiers = $qualifyingGateway->getQualifiers($_GET['ref']);
             $main .=
                 "<!-- Qualifying drivers container -->
-                    <section class='container'>
-                        <h2>Qualifying</h2>
+                <div class='row'>
+                    <section>
+                        <h2>Qualified Drivers</h2>
                         <table border='1'>
                             <thead>
                                 <tr>
@@ -104,8 +107,8 @@ try {
             $results = $resultGateway->getResultsFromRace($_GET['ref']);
             $main .=
                 "<!-- Race results container -->
-                        <section class='container placement'>
-                        <h2>Results</h2>
+                        <section class='placement'>
+                        <h2>Race Results</h2>
                             <table border='1'>
                                 <thead>
                                     <tr>
@@ -133,7 +136,8 @@ try {
             }
             $main .= "</tbody>
                     </table>
-                </section>";
+                </section>
+            </div>";
         } else {
             $main .= "<!-- No content message -->
             <section class='no-content'>
@@ -161,17 +165,26 @@ try {
 
 <body>
     <header>
-        <h1>F1 Dashboard Project</h1>
+        <div class="title">
+            <img src="https://logos-world.net/wp-content/uploads/2023/12/F1-Logo-500x281.png" height="100px" width="150px" />
+            <h1>Dashboard Project</h1>
+        </div>
         <nav>
             <a href="index.php">Home</a>
             <a href="browse-page.php">Browse</a>
             <a href="api-page.php">APIs</a>
         </nav>
     </header>
-    <main class="content">
+    <div class="wrapper">
+        <!-- Displays sidebar of all races -->
+        <aside>
+            <?php echo $aside ?>
+        </aside>
         <!-- Displays content if race selected -->
-        <?php echo $main ?>
-    </main>
+        <main>
+            <?php echo $main ?>
+        </main>
+    </div>
 </body>
 
 </html>
