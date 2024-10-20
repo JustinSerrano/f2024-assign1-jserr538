@@ -194,6 +194,10 @@ section.api {
     padding: 0;
 }
 
+.api li {
+    margin-bottom: 10px;
+}
+
 section h2 {
     text-align: center;
 }
